@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>C++的二进制兼容 | Lebron James</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在深入了解前，首先我们要明确两个概念：二进制兼容和源码兼容。  二进制兼容：在升级库文件的时候，不必重新编译使用此库的可执行文件或其他库文件，并且程序的功能不被破坏。  源码兼容：在升级库文件的时候，不必修改使用此库的可执行文件或其他库文件的源代码，只需重新编译应用程序，即可使程序的功能不被破坏。">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++的二进制兼容">
+<meta property="og:url" content="http://RunnanZhang.github.io/cpp-binary-compatibility/index.html">
+<meta property="og:site_name" content="Lebron James">
+<meta property="og:description" content="在深入了解前，首先我们要明确两个概念：二进制兼容和源码兼容。  二进制兼容：在升级库文件的时候，不必重新编译使用此库的可执行文件或其他库文件，并且程序的功能不被破坏。  源码兼容：在升级库文件的时候，不必修改使用此库的可执行文件或其他库文件的源代码，只需重新编译应用程序，即可使程序的功能不被破坏。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-16T14:28:43.592Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++的二进制兼容">
+<meta name="twitter:description" content="在深入了解前，首先我们要明确两个概念：二进制兼容和源码兼容。  二进制兼容：在升级库文件的时候，不必重新编译使用此库的可执行文件或其他库文件，并且程序的功能不被破坏。  源码兼容：在升级库文件的时候，不必修改使用此库的可执行文件或其他库文件的源代码，只需重新编译应用程序，即可使程序的功能不被破坏。">
+  
+    <link rel="alternative" href="/atom.xml" title="Lebron James" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/main.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/main.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/sitemap">奇念实难言</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">知过必改 得能莫忘 罔谈彼短 靡恃己长 信使可覆 器欲难量</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-ribbon" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						<div class="icon-wrap icon-house hide" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>标签</li>
+						<li>菜单</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				
+				<section class="switch-part switch-part1">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/C/" style="font-size: 13.33px;">C++</a> <a href="/tags/Compile/" style="font-size: 13.33px;">Compile</a> <a href="/tags/Encoding/" style="font-size: 13.33px;">Encoding</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Index/" style="font-size: 10px;">Index</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Qt/" style="font-size: 20px;">Qt</a> <a href="/tags/Windows/" style="font-size: 16.67px;">Windows</a>
+					</div>
+				</section>
+				
+
+				<section class="switch-part switch-part2">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://lovefangying.com/">Love Fy</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://qt90.com/">My App</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/RunnanZhang/">GitHub</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://qtdebug.com/">QtBook</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">天之道，损有余而补不足，是故虚胜实，不足胜有余。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">奇念实难言</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/main.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">奇念实难言</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">知过必改 得能莫忘 罔谈彼短 靡恃己长 信使可覆 器欲难量</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-cpp-binary-compatibility" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+        
+            <a href="javascript: void(0)" id="toc-button">列表</a>
+            <div style="display:none"><a href="/cpp-binary-compatibility/" class="article-date">
+  	<time datetime="2017-05-31T16:00:00.000Z" itemprop="datePublished">2017-06-01</time>
+</a></div>
+        
+
+        
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++的二进制兼容
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <div id="toc" class="article-toc" style="display: none;">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ABI和API"><span class="toc-text">ABI和API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-的ABI"><span class="toc-text">C++的ABI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#破坏二进制兼容的几种常见方式"><span class="toc-text">破坏二进制兼容的几种常见方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不会破坏二进制兼容的几种常见方式"><span class="toc-text">不会破坏二进制兼容的几种常见方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决二进制兼容问题的相关方法"><span class="toc-text">解决二进制兼容问题的相关方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-抽象类和Java的接口"><span class="toc-text">C++抽象类和Java的接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+          <!-- <hr/> -->
+        </div>
+        
+        <p>在深入了解前，首先我们要明确两个概念：二进制兼容和源码兼容。</p>
+<ul>
+<li><p>二进制兼容：在升级库文件的时候，不必<strong>重新编译</strong>使用此库的可执行文件或其他库文件，并且程序的功能不被破坏。</p>
+</li>
+<li><p>源码兼容：在升级库文件的时候，不必<strong>修改</strong>使用此库的可执行文件或其他库文件的<strong>源代码</strong>，只需重新编译应用程序，即可使程序的功能不被破坏。</p>
+</li>
+</ul>
+<a id="more"></a> 
+<h2 id="ABI和API"><a href="#ABI和API" class="headerlink" title="ABI和API"></a>ABI和API</h2><blockquote>
+<p>应用二进制接口（application binary interface，缩写为 ABI）描述了应用程序（或者其他类型）和操作系统之间或其他应用程序的低级接口。<code>ABI</code>涵盖了各种细节，如：数据类型的大小、布局和对齐；调用约定等。</p>
+</blockquote>
+<p>在了解二进制兼容和源码兼容两个定义以后，我们再看与其类似且对应的两个概念：<code>ABI</code>和<code>API</code>。<code>ABI</code>不同于<code>API</code>（应用程序接口），<code>API</code>定义了源代码和库之间的接口，因此同样的代码可以在支持这个<code>API</code>的任何系统中编译，然而<code>ABI</code>允许编译好的目标代码在使用兼容<code>ABI</code>的系统中无需改动就能运行。</p>
+<p>举个例子，在Qt和Java两种跨平台程序中，<code>API</code>像是Qt的接口，Qt有着通用接口，源代码只需要在支持Qt的环境下编译即可。<code>ABI</code>更像是Jvm，只要支持Jvm的系统上，都可以运行已有的Java程序。</p>
+<h2 id="C-的ABI"><a href="#C-的ABI" class="headerlink" title="C++的ABI"></a>C++的ABI</h2><p><code>ABI</code>更像是一个产品的使用说明书，同理C++的<code>ABI</code>就是如何使用C++生成可执行程序的一张说明书。编译器会根据这个说明书，生成二进制代码。C++的<code>ABI</code>在不同的编译器下会略有不同。</p>
+<p>C++<code>ABI</code>的部分内容举例：</p>
+<ul>
+<li>函数参数传递的方式，比如 x86-64 用寄存器来传函数的前 4 个整数参数 </li>
+<li>虚函数的调用方式，通常是 vptr/vtbl 然后用 vtbl[offset] 来调用 </li>
+<li>struct 和 class 的内存布局，通过偏移量来访问数据成员 </li>
+</ul>
+<p>综上所述，<strong>如果可执行程序通过以上说明书访问动态链接库A，以及此库的升级版本A+，若按此说明书上的方法，可以无痛的使用A和A+，那么我们就称库A的这次升级是二进制兼容的。</strong></p>
+<h2 id="破坏二进制兼容的几种常见方式"><a href="#破坏二进制兼容的几种常见方式" class="headerlink" title="破坏二进制兼容的几种常见方式"></a>破坏二进制兼容的几种常见方式</h2><ul>
+<li>添加新的虚函数</li>
+<li>不导出或者移除一个导出类</li>
+<li>改变类的继承</li>
+<li>改变虚函数声明时的顺序（偏移量改变，导致调用失败）</li>
+<li>添加新的非静态成员变量（类的内存布局改变，偏移量也发生变化）</li>
+<li>改变非静态成员变量的声明顺序</li>
+</ul>
+<h2 id="不会破坏二进制兼容的几种常见方式"><a href="#不会破坏二进制兼容的几种常见方式" class="headerlink" title="不会破坏二进制兼容的几种常见方式"></a>不会破坏二进制兼容的几种常见方式</h2><ul>
+<li>添加非虚函数（包括构造函数）</li>
+<li>添加新的类</li>
+<li>添加Qt中的信号槽</li>
+<li>在已存在的枚举类型中添加一个枚举值</li>
+<li>添加新的静态成员变量</li>
+<li>修改成员变量名称（偏移量未改变）</li>
+<li>添加<code>Q_OBJECT</code>,<code>Q_PROPERTY</code>, <code>Q_ENUMS</code> ,<code>Q_FLAGS</code>宏，添加这些宏都是修改了moc生成的文件，而不是类本身</li>
+</ul>
+<p>只要我们知道了程序是以什么方式访问动态库的（C++的ABI)，那么我们就很好判断，哪些操作会破坏二进制兼容。更多方式请参见<a href="https://community.kde.org/Policies/Binary_Compatibility_Issues_With_C%2B%2B" target="_blank" rel="external">Policies/Binary Compatibility Issues With C++ </a>  </p>
+<h2 id="解决二进制兼容问题的相关方法"><a href="#解决二进制兼容问题的相关方法" class="headerlink" title="解决二进制兼容问题的相关方法"></a>解决二进制兼容问题的相关方法</h2><ul>
+<li>使用<code>Bitflags</code>即位域</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">uint m1 : <span class="number">1</span>;</div><div class="line">uint m2 : <span class="number">3</span>;</div><div class="line">uint m3 : <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">uint m1 : <span class="number">1</span>;</div><div class="line">uint m2 : <span class="number">3</span>;</div><div class="line">uint m3 : <span class="number">1</span>;</div><div class="line">uint m4 : <span class="number">2</span>; <span class="comment">// new member without breaking binary compatibility.</span></div></pre></td></tr></table></figure>
+<ul>
+<li>使用<code>PImpl</code>机制，详情参见<a href="http://zhangrunnan.com/cpp-pimpl/" target="_blank" rel="external">PImpl机制以及Qt的D-Pointer实现</a></li>
+<li>使用静态库（当然也随之带来一系列弊端）</li>
+</ul>
+<h2 id="C-抽象类和Java的接口"><a href="#C-抽象类和Java的接口" class="headerlink" title="C++抽象类和Java的接口"></a>C++抽象类和Java的接口</h2><p>读到这里大家也许会奇怪，作者是不是放错地方了？其实不然，只是在我们了解二进制兼容后，可以更好地理解这组概念。之前我一直认为C++的抽象类就类似于Java的接口，现在发现，如果把一个C++的抽象类作为动态库的接口发布，那将是毁灭的。因为你无法增加虚函数，无法增加成员变量，这使得这个接口变得非常的不友好。这也就是Java接口的优势所在。Java 实际上把 C/C++ 的 linking 这一步骤推迟到 class loading 的时候来做，便不存在上述二进制兼容的问题。</p>
+<blockquote>
+<p>理解Java二进制兼容的关键是要理解延迟绑定（Late Binding）。延迟绑定是指Java直到运行时才检查类、域、方法的名称，而不象C/C++的编译器那样在编译期间就清除了类、域、方法的名称，代之以偏移量数值——这是Java二进制兼容得以发挥作用的关键。<br>由于采用了延迟绑定技术， 方法、域、类的名称直到运行时才解析，意味着只要域、方法等的名称（以及类型）一样，类的主体可以任意替换。</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://community.kde.org/Policies/Binary_Compatibility_Issues_With_C%2B%2B" target="_blank" rel="external">Policies/Binary Compatibility Issues With C++ </a></li>
+<li><a href="http://www.cppblog.com/Solstice/archive/2011/03/09/141401.html" target="_blank" rel="external">C++ 工程实践(4)：二进制兼容性</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/cpp-pimpl/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          PImpl机制以及Qt的D-Pointer实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/windows-explorer-select/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Windows打开资源管理器并选中文件</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2018 奇念实难言
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>

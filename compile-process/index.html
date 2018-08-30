@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>程序编译的四部曲 | Lebron James</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="提到编译我们并不陌生，静态编译、动态编译等相关概念也经常出现，那么编译到底是什么，编译的过程又是如何呢？其实我们平时提到的编译，仅仅是编译过程中的一部分，真正的编译过程可总结为如下四步：  预编译 编译 汇编 连接">
+<meta name="keywords" content="Compile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序编译的四部曲">
+<meta property="og:url" content="http://RunnanZhang.github.io/compile-process/index.html">
+<meta property="og:site_name" content="Lebron James">
+<meta property="og:description" content="提到编译我们并不陌生，静态编译、动态编译等相关概念也经常出现，那么编译到底是什么，编译的过程又是如何呢？其实我们平时提到的编译，仅仅是编译过程中的一部分，真正的编译过程可总结为如下四步：  预编译 编译 汇编 连接">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-16T14:28:43.590Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="程序编译的四部曲">
+<meta name="twitter:description" content="提到编译我们并不陌生，静态编译、动态编译等相关概念也经常出现，那么编译到底是什么，编译的过程又是如何呢？其实我们平时提到的编译，仅仅是编译过程中的一部分，真正的编译过程可总结为如下四步：  预编译 编译 汇编 连接">
+  
+    <link rel="alternative" href="/atom.xml" title="Lebron James" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/main.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/images/main.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/sitemap">奇念实难言</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">知过必改 得能莫忘 罔谈彼短 靡恃己长 信使可覆 器欲难量</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-ribbon" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						<div class="icon-wrap icon-house hide" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>标签</li>
+						<li>菜单</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				
+				<section class="switch-part switch-part1">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/C/" style="font-size: 13.33px;">C++</a> <a href="/tags/Compile/" style="font-size: 13.33px;">Compile</a> <a href="/tags/Encoding/" style="font-size: 13.33px;">Encoding</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Index/" style="font-size: 10px;">Index</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 13.33px;">Mac</a> <a href="/tags/Qt/" style="font-size: 20px;">Qt</a> <a href="/tags/Windows/" style="font-size: 16.67px;">Windows</a>
+					</div>
+				</section>
+				
+
+				<section class="switch-part switch-part2">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://lovefangying.com/">Love Fy</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://qt90.com/">My App</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/RunnanZhang/">GitHub</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://qtdebug.com/">QtBook</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">天之道，损有余而补不足，是故虚胜实，不足胜有余。</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">奇念实难言</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/images/main.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">奇念实难言</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">知过必改 得能莫忘 罔谈彼短 靡恃己长 信使可覆 器欲难量</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-compile-process" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+        
+            <a href="javascript: void(0)" id="toc-button">列表</a>
+            <div style="display:none"><a href="/compile-process/" class="article-date">
+  	<time datetime="2017-01-01T16:00:00.000Z" itemprop="datePublished">2017-01-02</time>
+</a></div>
+        
+
+        
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      程序编译的四部曲
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Compile/">Compile</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        <div id="toc" class="article-toc" style="display: none;">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#预编译"><span class="toc-text">预编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#汇编"><span class="toc-text">汇编</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接"><span class="toc-text">链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态编译"><span class="toc-text">静态编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#链接过程"><span class="toc-text">链接过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成和使用"><span class="toc-text">生成和使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态编译"><span class="toc-text">动态编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#链接过程-1"><span class="toc-text">链接过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成和使用-1"><span class="toc-text">生成和使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态导出-导入符"><span class="toc-text">动态导出/导入符</span></a></li></ol></li></ol>
+          <!-- <hr/> -->
+        </div>
+        
+        <p>提到编译我们并不陌生，静态编译、动态编译等相关概念也经常出现，那么编译到底是什么，编译的过程又是如何呢？其实我们平时提到的编译，仅仅是编译过程中的一部分，真正的编译过程可总结为如下四步：</p>
+<ul>
+<li>预编译</li>
+<li>编译</li>
+<li>汇编</li>
+<li>连接</li>
+</ul>
+<a id="more"></a> 
+<h2 id="预编译"><a href="#预编译" class="headerlink" title="预编译"></a>预编译</h2><p>删除所有<code>#define</code>，展开所有宏定义；删除注释；处理<code>#include</code>等等。</p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>将预处理后的文件进行一系列词法分析、语法分析以及优化等。此步骤需要.h文件，换言之，编译器需要知道，我程序所用的方法都是声明过的，都是合法的！</p>
+<h2 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h2><p>程序经过预编译、编译、汇编，此时已经输出目标文件（win下的.obj，Linux下的.o)。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>链接即是将之前生成的目标文件以及我们的库进行链接，生成可执行程序的过程，这里的可执行程序所指范围很广，可以是exe、lib、dll 等。此步骤所需文件为.lib文件以及上一步生成的目标文件，用其进行重定位！此步骤中静态编译、动态编译有很大区别，下面我们介绍下这两种模式的区别。</p>
+<h2 id="静态编译"><a href="#静态编译" class="headerlink" title="静态编译"></a>静态编译</h2><h3 id="链接过程"><a href="#链接过程" class="headerlink" title="链接过程"></a>链接过程</h3><p>进行重定位，即在.lib文件中找到我们所需内容（并不是将所有指令拷贝）嵌入到对应目标文件中，和目标文件一起打包生成为最后的可执行程序。此时可执行程序可能会很大。</p>
+<h3 id="生成和使用"><a href="#生成和使用" class="headerlink" title="生成和使用"></a>生成和使用</h3><p>编译静态库仅会生成.lib文件，无需其他支持。<br>使用此静态库，链接过程中需要.lib文件，一旦编译完毕，即打包成最终可执行程序，运行时则无需此.lib文件。</p>
+<h2 id="动态编译"><a href="#动态编译" class="headerlink" title="动态编译"></a>动态编译</h2><h3 id="链接过程-1"><a href="#链接过程-1" class="headerlink" title="链接过程"></a>链接过程</h3><p>.lib文件仅仅为索引文件，真正的核心内容都在dll中，链接过程仅仅用.lib文件进行重定位。个人理解此重定位是将目标文件中调用的函数（动态库中）的代码，替代为.lib里所存储的此函数在dll里的索引位置，一起打包为最后的可执行程序。这样在程序运行时，程序可以顺利的解析dll（找到相应方法在dll中的正确地址），从而使程序顺利的进行！</p>
+<h3 id="生成和使用-1"><a href="#生成和使用-1" class="headerlink" title="生成和使用"></a>生成和使用</h3><p>编译动态库最终生成dll，lib，exp等等文件。lib为索引文件，dll为核心指令文件，exp是一个中间文件，我们可不予理会。<br>使用此动态库，链接过程需要.lib文件，运行时需要dll文件。</p>
+<h3 id="动态导出-导入符"><a href="#动态导出-导入符" class="headerlink" title="动态导出/导入符"></a>动态导出/导入符</h3><p><code>__declspec(dllexport)</code> <code>__declspec(dllimport)</code>顾名思义，这俩符号是动态库导出时候才用到的。如果主程序调用静态库，包含的头文件还加<code>__declspec(dllimport)</code>，这样会导致直接编译不过。</p>
+<ul>
+<li><code>__declspec(dllexport)</code>这个符号非常重要，假如不加，我们动态编译后，生成的dll会有问题，而且还缺少lib和exp等文件，没有lib文件，意味着主程序想要使用这个动态库，则四部曲中的链接步骤无法进行。</li>
+<li><code>__declspec(dllimport)</code>这个符号相对于导出，就显得不重要了。这个符号会出现在供主程序包含的.h文件中，假如没有此符号，编译主程序时大多数不受影响！仅当我们的导出方法中含有static方法时，则必须加此符号，否则会导入失败。</li>
+</ul>
+<p>为了使我们头文件用同一版本，我们只需定义一个通用宏替代本身导入导出符号即可，具体做法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(MOUDLE_LIBRARY)</span></div><div class="line"><span class="meta">#  <span class="meta-keyword">define</span> MOUDLE_EXPORT __declspec(dllexport)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">else</span></span></div><div class="line"><span class="meta">#  <span class="meta-keyword">define</span> MOUDLE_EXPORT __declspec(dllimport)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<p>这样在本项目中，我们只需定义宏<code>MOUDLE_LIBRARY</code>，此时<code>MOUDLE_EXPORT</code>即为导出符号。当其他项目使用此库，包含其头文件时，由于没有定义此宏，则<code>MOUDLE_EXPORT</code>即为导入符号。</p>
+<p>附带提一句，在VS中，编译时关于对C++基本库的使用是动态还是静态，我们要想将其打包进我们的程序中，可以在选项中调节（MT/MD等选项）。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/qt-set-opacity/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Qt中设置透明度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/qt-set-uac/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Qt中设置程序UAC启动权限</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2018 奇念实难言
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
